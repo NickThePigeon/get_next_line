@@ -6,43 +6,45 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:40 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/11/30 20:58:30 by nicky         ########   odam.nl         */
+/*   Updated: 2020/12/01 17:41:35 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#define BUFFERSIZE 30
-
-static int		ft_line_len(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str)
-	{
-		if (str[i] == 10)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
+#define BUFFERSIZE 1
 
 int		get_next_line(int fd, char **line)
 {
 	int ret;
 	int i;
-	static char buf[BUFFERSIZE + 1];
+	int j;
+	char buf[BUFFERSIZE + 2];
+	static char *temp;
+	int len;
 
 	i = 0;
+	j = 0;
+	len = 0;
 	while (read(fd, buf, BUFFERSIZE))
 	{
-		while (i < BUFFERSIZE)
+		buf[BUFFERSIZE + 1] = '\0';
+		len = ft_strlend(buf, '\n');
+		if (temp)
+		*line = ft_strdup(temp);
+		*line = ft_strjoin(line[0], buf, len);
+	
+		while (buf[i])
 		{
-			if (buf[i] == '\n')
+			if (buf[i] ==  '\n')
+			{
+				temp = strdup(&buf[i + 1]);
+				break ;
+			}
+			i++;
 		}
-		*line = ft_strjoin(*line, buf);
+		if (i > len)
+			return (1);
 	}
-	*line[ft_line_len(*line) + 1] = '\0';
 	return (0);
 
 }

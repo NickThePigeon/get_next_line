@@ -6,11 +6,23 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:34 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/11/30 20:45:47 by nicky         ########   odam.nl         */
+/*   Updated: 2020/12/01 17:40:57 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlend(const char *str, char c)
+{
+	int n;
+
+	n = 0;
+	while (str[n] || str[n] != c)
+	{
+		n++;
+	}
+	return (n);
+}
 
 char	*ft_strdup(const char *str)
 {
@@ -30,7 +42,7 @@ char	*ft_strdup(const char *str)
 	return (newstr);
 }
 
-size_t	ft_strlen(const char *str)
+int		ft_strlen(const char *str)
 {
 	int n;
 
@@ -85,14 +97,14 @@ void		ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2, int lens2)
 {
 	int		i;
 	int		k;
 	char	*newstr;
 
-	if (!s1 || !s2)
-		return (NULL);
+/* 	if (!s2)
+		return (NULL); */
 	newstr = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) * sizeof(char)) + 1);
 	if (!newstr)
 		return (NULL);
@@ -103,12 +115,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		newstr[i] = s1[i];
 		i++;
 	}
-	while (s2[k])
+	while (k < lens2)
 	{
 		newstr[i] = s2[k];
 		i++;
 		k++;
 	}
+	free(s1);
 	newstr[i] = '\0';
 	return (newstr);
 }
