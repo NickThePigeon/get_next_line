@@ -6,7 +6,7 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:34 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/01 17:40:57 by nduijf        ########   odam.nl         */
+/*   Updated: 2020/12/01 18:10:12 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ int	ft_strlend(const char *str, char c)
 	int n;
 
 	n = 0;
-	while (str[n] || str[n] != c)
+	while (str[n] != '\0' && str[n] != c)
 	{
+		// write(1, &str[n], 1);
 		n++;
 	}
+	// write(1, "\n", 1);
 	return (n);
 }
 
