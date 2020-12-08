@@ -6,11 +6,31 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:34 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/02 12:44:44 by nicky         ########   odam.nl         */
+/*   Updated: 2020/12/08 17:08:14 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_calloc(size_t nitems, size_t size)
+{
+	void *ptr;
+
+	if (nitems == 0 || size == 0)
+	{
+		nitems = 1;
+		size = 1;
+	}
+	ptr = malloc(nitems * size);
+	if (ptr)
+		ft_bzero(ptr, nitems * size);
+	return (ptr);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, '\0', n);
+}
 
 int	ft_strlend(const char *str, char c)
 {

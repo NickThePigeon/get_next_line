@@ -6,7 +6,7 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:43 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/02 12:41:51 by nicky         ########   odam.nl         */
+/*   Updated: 2020/12/08 14:24:36 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ft_strchr(const char *str, int c);
 char	*ft_strcpy(char *dest, char *src);
 int		ft_modstr(char *s, char c);
 void	*ft_memset(void *dest, int val, size_t len);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t nitems, size_t size);
 
 
 #endif

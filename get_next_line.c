@@ -6,41 +6,39 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:40 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/04 10:57:00 by nicky         ########   odam.nl         */
+/*   Updated: 2020/12/08 17:10:45 by nduijf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#define BUFFERSIZE 1000
+#define BUFFERSIZE 1
 
 static char		*ft_add_res(char *oldres, char *buf)
 {
-	int i;
+	int i[2];
 	int res_len;
 	int buf_res_len;
 	char *newres;
 
 	res_len = 0;
-	buf_res_len = 0;
 	if (oldres)
 		res_len = ft_strlen(oldres);
 	buf_res_len = ft_strlen(buf) - ft_strlend(buf, '\n');
-	i = 0;
-	newres = (char *)malloc(sizeof(char) * res_len + buf_res_len + 1);
-	while (i < res_len)
+	i[0] = 0;
+	newres = (char *)ft_calloc(res_len + buf_res_len + 1, sizeof(char));
+	while (i[0] < res_len)
 	{
-		newres[i] = oldres[i];
-		i++;
+		newres[i[0]] = oldres[i[0]];
+		i[0]++;
 	}
-	int k = ft_strlend(buf, '\n');
+	i[1] = ft_strlend(buf, '\n');
 	while (buf_res_len > 0)
 	{
-		newres[i] = buf[k + 1];
-		i++;
-		k++;
+		newres[i[0]] = buf[i[1] + 1];
+		i[0]++;
+		i[1]++;
 		buf_res_len--;
 	}
-	newres[i] = '\0';
 	return (newres);
 }
 
@@ -64,7 +62,6 @@ static char		*ft_strduplen(const char *str, int len)
 
 static char		*ft_return_line(char *line, char *res)
 {
-	int i;
 	int len;
 
 	len = ft_strlend(res, '\n');
@@ -72,9 +69,7 @@ static char		*ft_return_line(char *line, char *res)
 		return (0);
 	line = ft_strduplen(res, len);
 	return (line);
-	
 }
-
 
 int		get_next_line(int fd, char **line)
 {
@@ -89,6 +84,7 @@ int		get_next_line(int fd, char **line)
 	buf[BUFFERSIZE] = '\0';
 	if (res)
 	{
+
 		if (ft_return_line(*line, res) != 0)
 		{
 			*line = ft_return_line(*line, res);
@@ -96,7 +92,7 @@ int		get_next_line(int fd, char **line)
 		}
 		else
 		{
-			*line = strdup(res); 
+			*line = ft_strdup(res); 
 			res = ft_memset(res, '\0', ft_strlen(res));
 		}
 	}
@@ -105,7 +101,7 @@ int		get_next_line(int fd, char **line)
 		ret = (read(fd, buf, BUFFERSIZE));
 		buf[ret] = '\0';
 		len = ft_strlend(buf, '\n');
-		*line = ft_strjoin(line[0], buf, len);
+		*line = ft_strjoin(*line, buf, len);
 		if (buf[len])
 		{
 			res = ft_add_res(res,buf);
@@ -114,26 +110,27 @@ int		get_next_line(int fd, char **line)
 		if (i > 0)
 			return (1);
 	}
-	return (0);
+	return (-1);
 }
-int main(int argc, char **argv)
-{
-	char *line;
-	int fd;
-	int ret;
-	(void)argc;
-	int i = 0;
+// int main(int argc, char **argv)
+// {
+// 	char *line;
+// 	int fd;
+// 	int ret;
+// 	(void)argc;
+// 	int i = 0;
 
-	fd = open(argv[1], O_RDONLY);
+// 	fd = open(argv[1], O_RDONLY);
 
 
-	while (i < 22)
-	{
-		line = (char *)malloc(sizeof(*line) * 1);
-		ret = get_next_line(fd, &line);
-		printf("line --> %s\n", line);
-		free(line);
-		i++;
-	}
-	return (0);
-}
+// 	ret = 1;
+// 	while (ret > 0)
+// 	{
+// 		line = (char *)malloc(sizeof(*line) * 1);
+// 		ret = get_next_line(fd, &line);
+// 		printf("line --> %s\n", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	return (0);
+// }
