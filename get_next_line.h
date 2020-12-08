@@ -6,7 +6,7 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:43 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/01 17:23:06 by nduijf        ########   odam.nl         */
+/*   Updated: 2020/12/02 12:41:51 by nicky         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,9 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_strjoin(char *s1, char *s2, int lens2);
 char	*ft_strchr(const char *str, int c);
+char	*ft_strcpy(char *dest, char *src);
+int		ft_modstr(char *s, char c);
+void	*ft_memset(void *dest, int val, size_t len);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nduijf <nduijf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 15:21:34 by nduijf        #+#    #+#                 */
-/*   Updated: 2020/12/01 18:10:12 by nduijf        ########   odam.nl         */
+/*   Updated: 2020/12/02 12:44:44 by nicky         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ int	ft_strlend(const char *str, char c)
 	n = 0;
 	while (str[n] != '\0' && str[n] != c)
 	{
-		// write(1, &str[n], 1);
 		n++;
 	}
-	// write(1, "\n", 1);
 	return (n);
 }
 
@@ -54,49 +52,51 @@ int		ft_strlen(const char *str)
 	return (n);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char			*newstr;
-	int				i;
-	unsigned int	lenght;
-
-	if (!s)
-		return (NULL);
-	newstr = (char *)malloc(sizeof(char) * len + 1);
-	if (newstr == NULL)
-		return (NULL);
-	i = 0;
-	lenght = len + start;
-	if (start <= ft_strlen(s))
-	{
-		while (start < lenght)
-		{
-			newstr[i] = s[start];
-			i++;
-			start++;
-		}
-	}
-	newstr[i] = '\0';
-	return (newstr);
-}
-
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strcpy(char *dest, char *src)
 {
 	int i;
 
-	if (!s || !fd)
-		return ;
 	i = 0;
-	while (s[i])
+	while (src[i] != '\0')
 	{
-		write(fd, &s[i], 1);
+		dest[i] = src[i];
 		i++;
 	}
+	dest[i] = '\0';
+	return (dest);
 }
 
-void		ft_putchar_fd(char c, int fd)
+void		*ft_memset(void *dest, int val, size_t len)
 {
-	write(fd, &c, 1);
+	unsigned char *ptr;
+
+	ptr = dest;
+	while (len > 0)
+	{
+		*ptr = val;
+		ptr++;
+		len--;
+	}
+	return (dest);
+}
+
+int		ft_modstr(char *s, char c)
+{
+	int i;
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+		{
+			ft_strcpy(s, s + i + 1);
+			return (1);
+		}
+		i++;
+	}
+	s[0] = '\0';
+	return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2, int lens2)
@@ -126,23 +126,4 @@ char	*ft_strjoin(char *s1, char *s2, int lens2)
 	free(s1);
 	newstr[i] = '\0';
 	return (newstr);
-}
-
-char	*ft_strchr(const char *str, int c)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-		{
-			return ((char*)&str[i]);
-		}
-		i++;
-	}
-	if (c == 0)
-		return ((char*)&str[i]);
-	else
-		return (0);
 }
